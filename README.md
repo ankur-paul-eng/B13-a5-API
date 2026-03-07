@@ -65,8 +65,7 @@
 - Each card shows:
   - Title
   - Description
-  - Status
-  - Category
+  - Status 
   - Author
   - Priority
   - Label
