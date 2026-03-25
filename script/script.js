@@ -166,3 +166,139 @@ const priorityFunc = (priority) => {
   }
 };
 
+
+// border top condition
+const borderTopCon = (bor) => {
+  if (bor === "open") {
+    return "border-t-4 border-t-green-500";
+  } else if (bor === "closed") {
+    return "border-t-4 border-t-purple-500";
+  }
+};
+
+// get dateUpdate
+const dateUpdate = (date) => {
+  const createDate = new Date(date);
+  const day = createDate.getDate();
+  const month = createDate.getMonth() + 1;
+  const year = createDate.getFullYear();
+  return `${day} / ${month} / ${year}`;
+};
+
+// modal option start
+// issuesModal.addEventListener("click", () => {});
+
+// load modal
+const loadModal = async (id) => {
+  showModalSpinner();
+  const res = await fetch(
+    `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`,
+  );
+  const data = await res.json();
+  displayModal(data.data);
+  removeLoadingSpinner();
+};
+
+// displayModal
+const displayModal = (card) => {
+  const modalContainer = document.getElementById("modal-card");
+  modalContainer.innerHTML = `
+ 
+                  <h2 class="text-xl font-bold">${card.title}</h2>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span  class="badge ${card.status === "open" ? "badge-success" : "badge-warning"} rounded-2xl">${card.status.toUpperCase()}</span>
+                    <p class="text-gray-500 flex items-center gap-2">
+                      <img src="./assets/Ellipse 5.png" alt="" />Opened by ${card.assignee || "Unassigned"}
+                    </p>
+                    <p class="text-gray-500 flex items-center gap-2">
+                      <img src="./assets/Ellipse 5.png" alt="" />${dateUpdate(card.createdAt)}
+                    </p>
+                  </div>
+                </div>
+                <div class="flex text-[12px] flex-wrap items-center gap-2">
+                  ${labelFunc(card.labels)}
+                </div>
+                <p class="text-gray-500 line-clamp-2">
+                  ${card.description}
+                </p>
+
+                <div class="grid grid-cols-2 px-4 py-2 bg-gray-100 rounded-xl">
+                  <div class="space-y-2">
+                    <p class="text-lg text-gray-500">Assignee:</p>
+                    <p class="font-semibold">${card.assignee || "Unassigned"}</p>
+                  </div>
+                  <div class="space-y-2">
+                    <p class="text-lg text-gray-500">Priority:</p>
+                    <span
+                      id="priority-unq"
+                      class="rounded-4xl py-1 px-3 ${priorityFunc(card.priority)} bg-gray-100"
+                    >
+                      ${card.priority.toUpperCase()}
+                    </span>
+                  </div>
+               
+  `;
+  document.getElementById("issues_modal").showModal();
+};
+
+//cards  dynamic loaded here
+const loadCard = async () => {
+  showLoadingSpinner();
+  const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
+  const res = await fetch(url);
+  const data = await res.json();
+  displayCard(data.data);
+  removeLoadingSpinner();
+};
+//display cards
+const displayCard = (cards) => {
+  // update Issues Cards Count
+  updateIssuesCardsCount(cards);
+
+  allCardsContainer.innerHTML = "";
+  cards.forEach((card) => {
+    // statusIcon
+    const statusIcon =
+      card.status === "closed"
+        ? "./assets/closed- Status.png"
+        : "./assets/open-Status.png";
+
+    const div = document.createElement("div");
+    div.className = `space-y-5 p-4 shadow-md rounded-lg ${borderTopCon(card.status)}`;
+    div.addEventListener("click", () => loadModal(card.id));
+    div.innerHTML = `
+    
+        <div class="space-y-5 pb-4 border-b-2 border-b-gray-200">
+          <div class="flex gap-6 justify-between items-center">
+            <img
+              src="${statusIcon}"
+              alt=""
+            />
+            <span id="priority-unq" class="rounded-4xl py-1 px-8 ${priorityFunc(card.priority)} bg-gray-100 text-md">
+            ${card.priority.toUpperCase()}
+            </span>
+          </div>
+          <div class="space-y-2">
+            <h2 class="text-xl font-bold">${card.title}</h2>
+            <p class="text-gray-500 line-clamp-2">${card.description}</p>
+          </div>
+          <div class="flex text-[12px] flex-wrap items-center gap-2">
+           ${labelFunc(card.labels)}
+          </div>
+        </div>
+        <div>
+          <p class="text-gray-500 text-sm">#${card.id} by ${card.author}</p>
+          <p class="text-gray-500 text-sm">${dateUpdate(card.createdAt)}</p>
+        </div>
+     
+    `;
+
+    allCardsContainer.appendChild(div);
+  });
+};
+
+// specific btn click show cards
+const specificBtnClick = (cards) => {};
+
+// declare fn
+loadCard();
