@@ -1,0 +1,238 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- tailwind + daisy linked -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- font awesome cdnjs linked -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- google font linked -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- css linked -->
+    <link rel="stylesheet" href="./style/style.css" />
+
+    <!-- fav icon -->
+    <link
+      rel="shortcut icon"
+      href="./assets/github-logo.png"
+      type="image/x-icon"
+    />
+
+    <title> Web Application </title>
+  </head>
+  <body>
+    <!-- login page -->
+    <section id="login-page" class="container mx-auto">
+      <div
+        class="w-11/12 md:w-5/12 p-6 mx-auto my-16 rounded-xl shadow-md space-y-6"
+      >
+        <!-- logo + header -->
+        <div class="text-center space-y-6">
+          <figure class="flex justify-center">
+            <img src="./assets/github-logo.png" alt="" />
+          </figure>
+          <div class="space-y-2">
+            <h1 class="text-2xl font-bold">GitHub Issues Tracker</h1>
+            <p class="text-gray-600">Sign in to manage your issues</p>
+          </div>
+        </div>
+
+        <!-- login form -->
+        <fieldset class="fieldset rounded-box p-4 w-full mx-auto space-y-4">
+          <div class="space-y-2">
+            <label class="label text-lg font-bold">Username</label>
+            <input
+              id="user-input"
+              type="text"
+              class="input w-full text-lg py-6 outline-none font-semibold"
+              placeholder="Enter Username"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label class="label text-lg font-bold">Password</label>
+            <input
+              id="password-input"
+              type="password"
+              class="input w-full text-lg py-6 outline-none font-semibold"
+              placeholder="Enter Password"
+            />
+          </div>
+
+          <button
+            id="singin-btn"
+            class="btn btn-primary py-6 rounded-xl text-lg mt-4"
+          >
+            Sing In
+          </button>
+        </fieldset>
+
+        <!-- or setup -->
+        <div class="flex items-center my-4">
+          <div class="flex-grow border-t border-gray-300"></div>
+          <span class="px-3 text-gray-500 font-medium">OR</span>
+          <div class="flex-grow border-t border-gray-300"></div>
+        </div>
+
+        <div class="text-center space-y-2">
+          <p class="text-lg text-gray-800 font-medium">Demo Credentials:</p>
+          <div class="py-6 w-full bg-gray-100 rounded-lg">
+            <p>Username: admin</p>
+            <p>Password: admin123</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- main page -->
+    <main id="main-page" class="container hidden mx-auto space-y-[60px]">
+      <!-- header section -->
+      <header
+        class="navbar bg-base-100 shadow-sm flex flex-wrap justify-between items-center gap-3"
+      >
+        <!-- logo -->
+        <div class="flex items-center gap-1">
+          <figure class="w-[36px]">
+            <img src="./assets/github-logo.png" alt="" />
+          </figure>
+          <a class="text-xl">GitHub Issues Tracker</a>
+        </div>
+        <!-- search -->
+        <div class="flex flex-wrap gap-3 items-center">
+          <label class="outline-none input flex items-center gap-1 w-[250px]">
+            <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+            <input
+              type="text"
+              id="search-input"
+              class="grow"
+              placeholder="Search issues..."
+            />
+          </label>
+          <div>
+            <button id="search-btn" class="btn btn-primary">
+              <i class="fa-solid fa-plus"></i> New Issue
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- all btn and cards section here -->
+      <section class="w-11/12 mx-auto space-y-6 mb-10">
+        <!-- 3 buttons all open closed -->
+        <div
+          id="btns-container"
+          class="p-4 shadow-sm flex gap-3 items-center mb-4"
+        >
+          <button
+            id="all-btn"
+            class="btn btn-primary active-common-btn btn-xs px-12 sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl"
+          >
+            All
+          </button>
+          <button
+            id="open-btn"
+            class="btn active-common-btn btn-xs px-8 sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl"
+          >
+            Open
+          </button>
+          <button
+            id="closed-btn"
+            class="btn active-common-btn btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl"
+          >
+            Closed
+          </button>
+        </div>
+
+        <!-- all issues and cards -->
+        <div class="shadow-md">
+          <!-- issues header -->
+          <div
+            class="flex justify-between gap-6 items-center flex-wrap p-4 shadow-sm"
+          >
+            <div class="flex items-center gap-4">
+              <figure class="p-2 rounded-full bg-gray-200">
+                <img src="./assets/Aperture.png" alt="" />
+              </figure>
+              <div>
+                <h2 id="issues-count" class="text-xl font-bold"></h2>
+                <p class="text-xl text-gray-500">
+                  Track and manage your project issues
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-6">
+              <div class="flex items-center gap-2">
+                <img src="./assets/Ellipse 2.png" alt="" />
+                <p class="text-xl">Open</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <img src="./assets/Ellipse 1.png" alt="" />
+                <p class="text-xl">Closed</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- all cards section here -->
+
+          <!-- modal -->
+          <dialog id="issues_modal" class="modal modal-bottom sm:modal-middle">
+            <div class="modal-box">
+              <!--  -->
+              <div id="modal-card" class="space-y-4"></div>
+              <!--  -->
+              <div class="modal-action">
+                <form method="dialog">
+                  <!-- if there is a button in form, it will close the modal -->
+                  <button class="btn btn-primary">Close</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
+
+          <!-- spinner loading -->
+          <div
+            id="spinner-load"
+            class="flex hidden justify-center items-center py-40"
+          >
+            <span class="loading loading-spinner loading-xl"></span>
+          </div>
+
+          <!-- card loaded dynamic from api  -->
+          <div
+            id="all-cards-show"
+            class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 p-6"
+          >
+            <!-- card loaded dynamic from api  -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- js connected -->
+    <script src="./script/script.js"></script>
+  </body>
+</html>
+
+<!-- original -->
